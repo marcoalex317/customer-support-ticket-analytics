@@ -1,0 +1,9 @@
+metrik,nilai
+baris_dim_date,1492
+baris_fakta,100000
+umur: d. lebih dari 1 tahun,29725
+umur: c. 91-365 hari,7622
+umur: b. 31-90 hari,1663
+umur: a. sampai 30 hari,877
+tanggal_tutup_terisi,60113
+tiket_selesai_di_atas_ambang,0

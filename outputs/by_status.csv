@@ -1,0 +1,6 @@
+status,jumlah,ada_durasi,median_jam,di_atas_ambang
+resolved,50131,50131,23.5,0
+in_progress,19783,0,,0
+on_hold,10165,0,,0
+closed_no_action,9982,9982,131.2,6103
+open,9939,0,,0

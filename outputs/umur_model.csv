@@ -1,0 +1,13 @@
+status,kelompok_umur,jumlah
+in_progress,a. sampai 30 hari,436
+in_progress,b. 31-90 hari,820
+in_progress,c. 91-365 hari,3802
+in_progress,d. lebih dari 1 tahun,14725
+on_hold,a. sampai 30 hari,237
+on_hold,b. 31-90 hari,436
+on_hold,c. 91-365 hari,1882
+on_hold,d. lebih dari 1 tahun,7610
+open,a. sampai 30 hari,204
+open,b. 31-90 hari,407
+open,c. 91-365 hari,1938
+open,d. lebih dari 1 tahun,7390

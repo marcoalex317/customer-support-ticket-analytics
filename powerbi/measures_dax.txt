@@ -1,0 +1,137 @@
+================================================================================
+PROYEK  : Customer Support Ticket Analytics
+TAHAP 4 : Measure DAX
+CARA    : Klik tabel fact_ticket di panel Data, lalu Home > New measure.
+          Tempel satu measure, tekan Enter, ulangi untuk measure berikutnya.
+          Jangan tempel semuanya sekaligus.
+================================================================================
+
+--------------------------------------------------------------------------------
+KELOMPOK 1. HITUNGAN DASAR
+--------------------------------------------------------------------------------
+
+Total Tiket = COUNTROWS(fact_ticket)
+
+Tiket Selesai = CALCULATE([Total Tiket], dim_status[status] = "resolved")
+
+Tiket Terbengkalai = CALCULATE([Total Tiket], dim_status[status] = "closed_no_action")
+
+Tiket Belum Selesai = CALCULATE([Total Tiket], dim_status[kelompok] = "Belum selesai")
+
+Persen Terselesaikan = DIVIDE([Tiket Selesai], [Total Tiket])
+
+Persen Terbengkalai = DIVIDE([Tiket Terbengkalai], [Total Tiket])
+
+--------------------------------------------------------------------------------
+KELOMPOK 2. WAKTU PENYELESAIAN
+--------------------------------------------------------------------------------
+
+Median Jam Selesai = MEDIAN(fact_ticket[durasi_selesai_jam])
+
+Rata Jam Selesai = AVERAGE(fact_ticket[durasi_selesai_jam])
+
+Median Jam Terbengkalai = MEDIAN(fact_ticket[durasi_terbengkalai_jam])
+
+P90 Jam Selesai = PERCENTILE.INC(fact_ticket[durasi_selesai_jam], 0.9)
+
+--------------------------------------------------------------------------------
+KELOMPOK 3. TUMPUKAN TIKET
+-- Tiket Ditutup memakai relasi tidak aktif ke tanggal_tutup.
+-- Inilah alasan relasi kedua ke dim_date dibuat.
+--------------------------------------------------------------------------------
+
+Tiket Dibuat = COUNTROWS(fact_ticket)
+
+Tiket Ditutup =
+CALCULATE(
+    COUNTROWS(fact_ticket),
+    USERELATIONSHIP(fact_ticket[tanggal_tutup], dim_date[tanggal])
+)
+
+Selisih Bulanan = [Tiket Dibuat] - [Tiket Ditutup]
+
+Backlog Kumulatif =
+VAR TglAkhir = MAX(dim_date[tanggal])
+VAR Dibuat =
+    CALCULATE(
+        COUNTROWS(fact_ticket),
+        FILTER(ALL(dim_date), dim_date[tanggal] <= TglAkhir)
+    )
+VAR Ditutup =
+    CALCULATE(
+        COUNTROWS(fact_ticket),
+        FILTER(ALL(dim_date), dim_date[tanggal] <= TglAkhir),
+        USERELATIONSHIP(fact_ticket[tanggal_tutup], dim_date[tanggal])
+    )
+RETURN
+    Dibuat - Ditutup
+
+Backlog Lebih Satu Tahun =
+CALCULATE(
+    COUNTROWS(fact_ticket),
+    fact_ticket[kelompok_umur] = "d. lebih dari 1 tahun"
+)
+
+Rata Umur Backlog Hari = AVERAGE(fact_ticket[umur_hari])
+
+--------------------------------------------------------------------------------
+KELOMPOK 4. KUALITAS LAYANAN
+--------------------------------------------------------------------------------
+
+Rata CSAT = AVERAGE(fact_ticket[csat_dinilai])
+
+Tiket Tanpa Nilai CSAT =
+COUNTROWS(FILTER(fact_ticket, ISBLANK(fact_ticket[csat_dinilai])))
+
+Persen Dibuka Kembali = AVERAGE(fact_ticket[reopened])
+
+--------------------------------------------------------------------------------
+KELOMPOK 5. KUALITAS TRIASE
+--------------------------------------------------------------------------------
+
+Persen Urgent =
+DIVIDE(
+    CALCULATE([Total Tiket], dim_priority[priority] = "urgent"),
+    [Total Tiket]
+)
+
+Persen Prioritas Tinggi =
+DIVIDE(
+    CALCULATE([Total Tiket], dim_priority[urutan] <= 2),
+    [Total Tiket]
+)
+
+================================================================================
+PENGATURAN FORMAT
+Pilih tiap measure, lalu atur di tab Measure tools.
+
+  Persen Terselesaikan        Percentage, 1 desimal
+  Persen Terbengkalai         Percentage, 1 desimal
+  Persen Urgent               Percentage, 1 desimal
+  Persen Prioritas Tinggi     Percentage, 1 desimal
+  Persen Dibuka Kembali       Percentage, 2 desimal
+  Median Jam Selesai          Decimal number, 1 desimal
+  Rata Jam Selesai            Decimal number, 1 desimal
+  Median Jam Terbengkalai     Decimal number, 1 desimal
+  P90 Jam Selesai             Decimal number, 1 desimal
+  Rata CSAT                   Decimal number, 2 desimal
+  Rata Umur Backlog Hari      Whole number
+  Sisanya                     Whole number, dengan pemisah ribuan
+================================================================================
+
+UJI KEBENARAN
+Buat satu visual Table kosong, masukkan measure berikut, dan cocokkan angkanya.
+
+  Total Tiket                 harus 100.000
+  Tiket Selesai               harus 50.131
+  Tiket Terbengkalai          harus 9.982
+  Tiket Belum Selesai         harus 39.887
+  Median Jam Selesai          harus 23,5
+  Median Jam Terbengkalai     harus 131,2
+  Backlog Lebih Satu Tahun    harus 29.725
+  Persen Dibuka Kembali       harus sekitar 5,1 persen
+  Rata CSAT                   harus sekitar 3,20
+
+Jika salah satu tidak cocok, berhenti dan periksa relasi atau penulisan measure
+sebelum melanjutkan ke pembuatan visual.
+================================================================================

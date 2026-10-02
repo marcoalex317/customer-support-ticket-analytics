@@ -1,0 +1,13 @@
+sla_plan,priority,jumlah,persen_dalam_sla
+gold,high,5851,19.6
+gold,low,11883,39.8
+gold,medium,10560,35.3
+gold,urgent,1581,5.3
+platinum,high,1975,19.6
+platinum,low,3960,39.4
+platinum,medium,3594,35.7
+platinum,urgent,530,5.3
+standard,high,12039,20.0
+standard,low,23892,39.8
+standard,medium,21159,35.2
+standard,urgent,2976,5.0
