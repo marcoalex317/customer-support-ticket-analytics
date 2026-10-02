@@ -1,8 +1,8 @@
 # Customer Support Ticket Analytics
 
 End-to-end business intelligence project on 100,000 customer support tickets
-(January 2022 – December 2025): raw CSV to PostgreSQL, SQL analysis, a star
-schema in Power BI, and a three-page dashboard built to answer one question —
+(January 2022 - December 2025): raw CSV to PostgreSQL, SQL analysis, a star
+schema in Power BI, and a three-page dashboard built to answer one question,
 **why does this support operation have a backlog it cannot clear?**
 
 The short answer: it is not speed. Tickets that get resolved close in a median
