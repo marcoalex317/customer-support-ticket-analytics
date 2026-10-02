@@ -10,6 +10,8 @@ of 23.5 hours. The problem is that **half of all tickets are never resolved at
 all**, and the queue has been growing by roughly 830 tickets every month for
 four straight years.
 
+![Overview page of the dashboard](images/01-overview.png)
+
 ---
 
 ## Headline findings
@@ -150,24 +152,21 @@ Three pages, each answering one question.
 **1. Overview — what is the state of the queue?**
 Five KPIs (total tickets, resolution rate, median hours to resolve, closed
 without action, still unresolved), cumulative backlog growth, ticket
-composition by status, and created vs closed per month.
+composition by status, and created vs closed per month. Shown at the top of
+this README.
 
 **2. Resolution Drivers — what decides how fast a ticket closes?**
 Median hours by priority, median hours by SLA plan broken down by priority, and
 a 100% stacked distribution of resolved vs abandoned tickets across 20-hour
 bands — the chart that shows nothing past 80 hours was ever actually resolved.
 
+![Resolution Drivers page](images/02-resolution-drivers.png)
+
 **3. Backlog Health — how bad is the queue, and is it getting worse?**
 Backlog by age bucket, age composition per status, and CSAT over time on a
 fixed 1–5 axis so that normal fluctuation is not mistaken for a trend.
 
-<!--
-  Add screenshots to images/ and paste these three lines under each page heading:
-
-  ![Overview](images/01-overview.png)
-  ![Resolution Drivers](images/02-resolution-drivers.png)
-  ![Backlog Health](images/03-backlog-health.png)
--->
+![Backlog Health page](images/03-backlog-health.png)
 
 ---
 
