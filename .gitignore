@@ -1,0 +1,22 @@
+# Raw data — see data/README.md for how to obtain it
+data/raw/
+*.csv
+!outputs/*.csv
+
+# Power BI
+*.pbix.bak
+~$*.pbix
+
+# Office temp files
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
